@@ -10,7 +10,7 @@ type User struct {
 	Password      string
 	FirstName     string
 	LastName      string
-	Birthday      string         // Предполагаем, что день рождения хранится в формате "YYYY-MM-DD"
+	Birthday      string         //YYYY-MM-DD
 	Subscriptions []Subscription `gorm:"foreignkey:UserID"`
 }
 

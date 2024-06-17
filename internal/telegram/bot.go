@@ -89,14 +89,14 @@ func (b *Bot) handleStart(msg *tgbotapi.Message) {
 func (b *Bot) handleSignup(msg *tgbotapi.Message) {
 	args := msg.CommandArguments()
 	if args == "" {
-		reply := "Для регистрации введи /signup <username> <password> <firstname> <lastname> <birthday>"
+		reply := "Для регистрации введи /signup <username> <password> <firstname> <lastname> <birthday (YYYY-MM-DD)>"
 		b.sendMessage(msg.Chat.ID, reply)
 		return
 	}
 
 	params := strings.Fields(args)
 	if len(params) < 5 {
-		reply := "Неверный формат. Используй /signup <username> <password> <firstname> <lastname> <birthday>"
+		reply := "Неверный формат. Используй /signup <username> <password> <firstname> <lastname> <birthday (YYYY-MM-DD)>"
 		b.sendMessage(msg.Chat.ID, reply)
 		return
 	}
@@ -255,19 +255,12 @@ func (b *Bot) sendMessage(chatID int64, text string) {
 }
 
 func (b *Bot) handleShowCommands(msg *tgbotapi.Message) {
-	commands := []string{
-		"/start - начать работу с ботом\n",
-		"/signup <username> <password> <firstname> <lastname> <birthday> - зарегистрироваться\n",
-		"/list - показать список пользователей\n",
-		"/sublist - показать список подписок\n",
-		"/sub <user_id> - подписаться на пользователя\n",
-		"/unsub <user_id> - отписаться от пользователя\n",
-	}
-
-	reply := "Доступные команды:\n"
-	for _, command := range commands {
-		reply += command + "\n"
-	}
-
+	reply := "Доступные команды:\n" +
+		"/start - начать работу с ботом\n" +
+		"/signup <username> <password> <firstname> <lastname> <birthday (YYYY-MM-DD)> - зарегистрироваться\n" +
+		"/list - показать список пользователей\n" +
+		"/sublist - показать список подписок\n" +
+		"/sub <username> - подписаться на пользователя\n" +
+		"/unsub <username - отписаться от пользователя\n"
 	b.sendMessage(msg.Chat.ID, reply)
 }
