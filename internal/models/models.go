@@ -1,22 +1,20 @@
 package models
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import "time"
 
 type User struct {
-	gorm.Model
-	Username      string `gorm:"unique_index"`
-	Password      string
-	FirstName     string
-	LastName      string
-	Birthday      string         //YYYY-MM-DD
-	Subscriptions []Subscription `gorm:"foreignkey:UserID"`
+	ID        int
+	Username  string
+	Password  string
+	FirstName string
+	LastName  string
+	Birthday  time.Time //хранить в date
+	ChatID    int64     //bigint
 }
 
 type Subscription struct {
-	gorm.Model
-	UserID       uint
-	SubscribedTo uint
-	Notification bool
+	ID                 int //id of
+	UserID             int
+	SubscribedTo       int
+	isSendNotification bool
 }

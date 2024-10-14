@@ -1,17 +1,16 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
-	"projectik/internal/models"
 
 	"github.com/joho/godotenv"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	_ "github.com/lib/pq" //импорт драйвера
 )
 
-func Init() (*gorm.DB, error) {
+func Init() (*sql.DB, error) {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
@@ -23,20 +22,20 @@ func Init() (*gorm.DB, error) {
 	dbname := os.Getenv("DB_NAME")
 	port := os.Getenv("DB_PORT")
 
-	credits := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		host, user, password, dbname, port)
 
-	db, err := gorm.Open(postgres.Open(credits), &gorm.Config{})
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 		return nil, err
 	}
 
-	err = db.AutoMigrate(&models.User{}, &models.Subscription{})
-	if err != nil {
-		log.Fatalf("Failed to migrate database: %v", err)
+	if err := db.Ping(); err != nil {
+		log.Fatalf("Failed to ping database: %v", err)
 		return nil, err
 	}
 
+	log.Println("Database connected successfully")
 	return db, nil
 }

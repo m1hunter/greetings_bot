@@ -1,13 +1,11 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"log"
 	"os"
-
 	"projectik/internal/database"
-	"projectik/internal/telegram"
-
-	"github.com/joho/godotenv"
+	"projectik/internal/notification"
 )
 
 func main() {
@@ -20,13 +18,14 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
+	defer db.Close()
 
 	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
 	if botToken == "" {
 		log.Fatalf("TELEGRAM_BOT_TOKEN is not set")
 	}
 
-	bot, err := telegram.NewBot(botToken, db)
+	bot, err := notification.NewBot(botToken, db)
 	if err != nil {
 		log.Fatalf("Failed to create bot: %v", err)
 	}
