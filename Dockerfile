@@ -16,6 +16,6 @@ RUN go mod tidy
 
 RUN go build -o greetingsbotik ./cmd/main.go
 
-RUN echo "TELEGRAM_BOT_TOKEN=7090855604:AAE9Ui7J34yFjnQ7Be8EyRtomfkxTVFm7CU\nDB_HOST=localhost\nDB_PORT=5891\nDB_USER=postgres\nDB_PASSWORD=postgres\nDB_NAME=postgres" > .env
+RUN echo "TELEGRAM_BOT_TOKEN=7090855604:AAE9Ui7J34yFjnQ7Be8EyRtomfkxTVFm7CU\nDB_HOST=postgres\nDB_PORT=5891\nDB_USER=postgres\nDB_PASSWORD=postgres\nDB_NAME=postgres" > .env
 
 CMD ["./greetingsbotik"]
