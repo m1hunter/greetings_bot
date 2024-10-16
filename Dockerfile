@@ -12,8 +12,7 @@ WORKDIR /greetbot
 # Исправленный путь для git clone
 RUN git clone https://github.com/m1hunter/greetings_bot.git . && \
     go mod tidy && \
-    echo "TELEGRAM_BOT_TOKEN=7090855604:AAE9Ui7J34yFjnQ7Be8EyRtomfkxTVFm7CU" > .env && \
-    go build -o greetingsbotik ./cmd/main.go \
+    go build -o greetingsbotik ./cmd/main.go
 
 
 CMD ["./greetingsbotik"]
