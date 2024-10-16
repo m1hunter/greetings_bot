@@ -87,8 +87,9 @@ func (b *AuthBot) handleSignup(msg *tgbotapi.Message, update tgbotapi.Update) {
 	// 	в будущем будет как минимум basic auth
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		reply := "Ошибка при регистрации. Повторите попытку: " + err.Error()
+		reply := "Ошибка при регистрации. Повторите попытку позже."
 		b.sendMessage(msg.Chat.ID, reply)
+		log.Printf("User %s registration error: ", msg.From.UserName, err)
 		return
 	}
 
