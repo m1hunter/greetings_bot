@@ -20,6 +20,10 @@ func main() {
 	}
 	defer db.Close()
 
+	if err := database.CreateTables(db); err != nil {
+		log.Fatalf("Error creating tables: %v", err)
+	}
+
 	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
 	if botToken == "" {
 		log.Fatalf("TELEGRAM_BOT_TOKEN is not set")
