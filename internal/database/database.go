@@ -47,8 +47,8 @@ func CreateTables(db *sql.DB) error {
 	    id SERIAL PRIMARY KEY,
 	    username TEXT NOT NULL,
 	    password TEXT NOT NULL,
-	    first_name TEXT NOT NULL,
-	    last_name TEXT NOT NULL,
+	    firstname TEXT NOT NULL,
+	    lastname TEXT NOT NULL,
 	    birthday DATE NOT NULL,
 	    chat_id BIGINT NOT NULL
 	    );`
