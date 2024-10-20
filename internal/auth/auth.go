@@ -57,6 +57,7 @@ func (b *AuthBot) handleSignup(msg *tgbotapi.Message, update tgbotapi.Update) {
 		return
 	}
 
+	// Так оказалось, что у пользователей в тг могут отсуствовать никнеймы, и пришлось сделать эту проверку
 	username := update.Message.From.UserName
 	if username == "" {
 		reply := "У вас отсутствует никнейм. Чтобы использовать бота, укажите в настройках никнейм."
@@ -101,7 +102,7 @@ func (b *AuthBot) handleSignup(msg *tgbotapi.Message, update tgbotapi.Update) {
 		username, hashedPassword, firstname, lastname, birthday, chatId)
 
 	if err != nil {
-		reply := "Ошибка при регистрации пользователя: " + err.Error()
+		reply := "Ошибка при регистрации пользователя. Повторите попытку позже."
 		b.sendMessage(msg.Chat.ID, reply)
 		log.Printf("Error during user registration: %v", err)
 		return
